@@ -22,7 +22,7 @@ class ContactsRecyclerViewAdapter(val items: List<Contact>): RecyclerView.Adapte
     override fun onBindViewHolder(holder: ContactsRecyclerViewAdapter.ViewHolder?, position: Int) {
         val item = items[position]
         holder?.contactIcon?.background = ContextCompat.getDrawable(holder?.itemView?.context, R.color.colorAccent)
-        holder?.contactName?.text = item.name
+        holder?.contactName?.text = item.login
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

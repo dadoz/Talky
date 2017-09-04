@@ -1,19 +1,22 @@
 package application.davidelmn.talky.presenters
 
 import application.davidelmn.talky.models.Contact
+import application.davidelmn.talky.repositories.GithubRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by davide-syn on 8/30/17.
  */
 
 class ContactListPresenter(view: ContactListView<Contact>) {
+    private val githubRepository: GithubRepository by lazy { GithubRepository() }
     init {
-        //retrieve data
-        val list: ArrayList<Contact> = ArrayList()
-        list.add(Contact("Davide", "http://blalalallala.icon.en"))
-        list.add(Contact("Frank", "http://bluuuuu.icon.en"))
-        list.add(Contact("Mary", "http://bliiii.icon.en"))
-        view.setData(list)
+        githubRepository.getContacts()
+                .filter({list -> !list.isEmpty()})
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ list -> view.setData(list) }, { error -> view.onError(error) })
     }
 }
 

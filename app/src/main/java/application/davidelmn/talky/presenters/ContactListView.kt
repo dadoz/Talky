@@ -5,4 +5,5 @@ package application.davidelmn.talky.presenters
  */
 public interface ContactListView<T> {
     fun setData(list: List<T>)
+    fun onError(error: Throwable?)
 }
